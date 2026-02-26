@@ -1,0 +1,67 @@
+{
+  "kind": "feature_evidence_report",
+  "features": [
+    {
+      "featureId": "feature-preset-song-playback-must-use-the-ocarina-audio-synthesis-sine-triangle-with-reverb-as-defined-in-audioengine-ts-instead-of-the-piano-style-synthesis-when-a-user-loads-a-preset-song-and-plays-it-back-in-the-song-editor-the-notes-must-sound-like-the-ocarina-instrument-not-a-piano",
+      "featureTitle": "Preset song playback must use the ocarina audio synthesis (sine/triangle with reverb as defined in audioEngine.ts) instead of the piano-style synthesis. When a user loads a preset song and plays it back in the Song Editor, the notes must sound like the ocarina instrument, not a piano.",
+      "files": [
+        "frontend/src/components/SongEditor.tsx",
+        "frontend/src/pages/PresetSongsPage.tsx"
+      ],
+      "components": [
+        "blob-storage@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-16"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-add-a-sound-presets-ui-panel-within-or-alongside-the-existing-sound-settings-panel-where-users-can-1-save-the-current-sound-settings-as-a-named-preset-with-an-optional-label-2-view-a-list-of-all-saved-presets-and-3-load-a-preset-to-instantly-apply-its-tone-reverb-pitch-offset-and-ocarina-image-to-the-current-session-if-the-preset-includes-an-ocarina-image-reference-display-the-associated-image-in-the-ocarinavisual-and-design-editor-views",
+      "featureTitle": "Add a Sound Presets UI panel (within or alongside the existing Sound Settings panel) where users can: (1) save the current sound settings as a named preset (with an optional label), (2) view a list of all saved presets, and (3) load a preset to instantly apply its tone, reverb, pitch offset, and ocarina image to the current session. If the preset includes an ocarina image reference, display the associated image in the OcarinaVisual and Design Editor views.",
+      "files": [
+        "frontend/src/components/OcarinaDesignEditor.tsx",
+        "frontend/src/components/OcarinaVisual.tsx",
+        "frontend/src/components/SoundSettingsPanel.tsx",
+        "frontend/src/hooks/useQueries.ts"
+      ],
+      "components": [
+        "blob-storage@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-18"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-ensure-all-ocarina-visuals-tablature-symbols-and-hole-diagrams-throughout-the-app-consistently-reflect-the-4-hole-2-2-parallel-layout-2-holes-on-top-row-2-holes-on-bottom-row-arranged-as-a-square-grid-the-ocarinavisual-svg-component-and-tablaturesymbol-must-default-to-this-2-2-layout-no-thumb-holes-or-additional-holes-should-be-displayed",
+      "featureTitle": "Ensure all ocarina visuals, tablature symbols, and hole diagrams throughout the app consistently reflect the 4-hole 2×2 parallel layout (2 holes on top row, 2 holes on bottom row, arranged as a square grid). The OcarinaVisual SVG component and TablatureSymbol must default to this 2×2 layout. No thumb holes or additional holes should be displayed.",
+      "files": [
+        "frontend/src/components/OcarinaVisual.tsx",
+        "frontend/src/components/TablatureSymbol.tsx"
+      ],
+      "components": [
+        "blob-storage@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-19"
+      ],
+      "confidence": "high"
+    }
+  ]
+}

@@ -1,0 +1,121 @@
+{
+  "kind": "build_request",
+  "title": "Expand preset songs, add Reggae genre, ocarina sound for presets, save/load custom sounds",
+  "projectName": "Ocarina Composer",
+  "priority": "normal",
+  "requirements": [
+    {
+      "id": "REQ-15",
+      "text": "Add more preset songs to the backend for each existing genre (Folk, Rock, Electronic, Reggaeton) using well-known popular melodies adapted for 4-hole ocarina in the C5–C6 range. Each genre should have at least 3–4 songs total. Add a new 'Reggae' genre with at least 2 popular reggae melodies (e.g., based on Bob Marley classics) adapted for ocarina. Each preset song must include name, description, a full sequence of notes with octave, timing, bar lines, and genre-appropriate annotations.",
+      "target": "backend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "upload more folk songs and of each genre, use the most popular for each genre and include a reggae melody"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Folk, Rock, Electronic, and Reggaeton genres each have at least 3–4 preset songs in the backend",
+        "A new 'Reggae' genre exists with at least 2 preset songs based on popular reggae melodies",
+        "All preset songs include name, description, notes array with octave/timing, bar lines, and annotations",
+        "All notes are within the 4-hole ocarina playable range (C5–C6)",
+        "PresetSongsPage displays the new Reggae genre group alongside existing genres"
+      ]
+    },
+    {
+      "id": "REQ-16",
+      "text": "Preset song playback must use the ocarina audio synthesis (sine/triangle with reverb as defined in audioEngine.ts) instead of the piano-style synthesis. When a user loads a preset song and plays it back in the Song Editor, the notes must sound like the ocarina instrument, not a piano.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "the sound playback from preset songs should be the ocarina preset sound"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Loading a preset song and triggering playback produces ocarina-style audio (sine/triangle with reverb envelope)",
+        "Piano-style synthesis (triangle with decay) is not used for preset song playback",
+        "The existing sound settings (tone, warmth, reverb, pitch offset) stored in the backend are applied to preset song playback"
+      ]
+    },
+    {
+      "id": "REQ-17",
+      "text": "Add a 'Sound Presets' feature that allows users to save and load named custom sound configurations. A saved sound preset stores the current ocarina sound settings (tone character, reverb amount, pitch offset) and optionally the currently uploaded ocarina image filename. Users can name a preset, save it, and later load it to restore all those settings at once. Sound presets are persisted in the backend and accessible to all users.",
+      "target": "backend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "let me save and load my preset sounds with ocarina image if uploaded"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Backend exposes an update function to save a named sound preset (name, tone, reverb, pitch offset, optional image filename)",
+        "Backend exposes a query function to list all saved sound presets",
+        "Backend exposes an update function to delete a named sound preset",
+        "Sound preset data includes the optional ocarina image filename reference"
+      ]
+    },
+    {
+      "id": "REQ-18",
+      "text": "Add a Sound Presets UI panel (within or alongside the existing Sound Settings panel) where users can: (1) save the current sound settings as a named preset (with an optional label), (2) view a list of all saved presets, and (3) load a preset to instantly apply its tone, reverb, pitch offset, and ocarina image to the current session. If the preset includes an ocarina image reference, display the associated image in the OcarinaVisual and Design Editor views.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "let me save and load my preset sounds with ocarina image if uploaded"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Sound Settings page/panel shows a 'Save Current as Preset' input with a name field and save button",
+        "A list of saved presets is shown; clicking one loads its sound settings and optional image",
+        "Loading a preset updates the tone, reverb, and pitch offset sliders to the preset values",
+        "If the preset includes an ocarina image filename, the image is shown in OcarinaVisual/Design Editor",
+        "Users can delete a saved preset from the list"
+      ]
+    },
+    {
+      "id": "REQ-19",
+      "text": "Ensure all ocarina visuals, tablature symbols, and hole diagrams throughout the app consistently reflect the 4-hole 2×2 parallel layout (2 holes on top row, 2 holes on bottom row, arranged as a square grid). The OcarinaVisual SVG component and TablatureSymbol must default to this 2×2 layout. No thumb holes or additional holes should be displayed.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "this is for a 4 hole ocarina in 2x2 parallel"
+        ]
+      },
+      "acceptanceCriteria": [
+        "OcarinaVisual renders exactly 4 holes in a 2×2 grid (top-left, top-right, bottom-left, bottom-right)",
+        "TablatureSymbol renders exactly 4 holes in the same 2×2 arrangement",
+        "No additional holes (thumb holes, sub-holes) are shown anywhere in the app",
+        "The default layout (when no custom layout is loaded) is the 2×2 parallel configuration"
+      ]
+    }
+  ],
+  "constraints": [
+    "All Motoko logic must remain in backend/main.mo as a single actor",
+    "Do not modify files in frontend/src/hooks/ or frontend/src/components/ui",
+    "Preset song notes must stay within the 4-hole ocarina C5–C6 range",
+    "Ocarina audio synthesis must use the existing audioEngine.ts ocarina function (not piano synthesis)"
+  ],
+  "nonGoals": [
+    "Adding MIDI or external instrument support",
+    "Real-time collaborative editing or WebSocket features",
+    "Changing the piano keyboard layout or key mappings (a–k to C5–C6)",
+    "Adding more than 4 holes to the ocarina visual",
+    "Per-user authentication-gated sound presets (presets are shared/global)"
+  ],
+  "imageRequirements": {
+    "required": [],
+    "edits": []
+  }
+}

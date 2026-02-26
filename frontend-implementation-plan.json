@@ -1,0 +1,88 @@
+{
+  "kind": "implementation_plan",
+  "version": "1.0",
+  "title": "Expand preset songs, add Reggae genre, ocarina sound for presets, save/load custom sounds",
+  "requirements": [
+    {
+      "id": "REQ-16",
+      "summary": "Update preset song playback to use ocarina audio synthesis instead of piano-style synthesis",
+      "acceptanceCriteria": [
+        "Loading a preset song and triggering playback produces ocarina-style audio (sine/triangle with reverb envelope)",
+        "Piano-style synthesis (triangle with decay) is not used for preset song playback",
+        "The existing sound settings (tone, warmth, reverb, pitch offset) stored in the backend are applied to preset song playback"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/SongEditor.tsx",
+          "operation": "modify",
+          "description": "Update the playback mechanism in SongEditor to use the ocarina synthesis function from audioEngine.ts (with sine/triangle waves and reverb envelope) instead of piano synthesis. Ensure that when a preset song is loaded and played back, the audioEngine.ocarina() function is called with current sound settings (tone character, warmth, reverb mix/amount/delay, pitch offset). Remove any references to piano-style synthesis for preset song playback."
+        },
+        {
+          "path": "frontend/src/pages/PresetSongsPage.tsx",
+          "operation": "modify",
+          "description": "Update the PresetSongsPage to display the new 'Reggae' genre group alongside existing genres (Folk, Rock, Electronic, Reggaeton). Group preset songs by genre and render a section for Reggae when preset songs with genre 'Reggae' are present. Ensure the UI layout accommodates the fifth genre consistently with existing genre cards."
+        }
+      ]
+    },
+    {
+      "id": "REQ-18",
+      "summary": "Add Sound Presets UI panel for saving and loading named custom sound configurations",
+      "acceptanceCriteria": [
+        "Sound Settings page/panel shows a 'Save Current as Preset' input with a name field and save button",
+        "A list of saved presets is shown; clicking one loads its sound settings and optional image",
+        "Loading a preset updates the tone, reverb, and pitch offset sliders to the preset values",
+        "If the preset includes an ocarina image filename, the image is shown in OcarinaVisual/Design Editor",
+        "Users can delete a saved preset from the list"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/hooks/useQueries.ts",
+          "operation": "modify",
+          "description": "Add React Query hooks for sound preset management: useGetAllSoundPresets (query to fetch all presets via actor.getAllSoundPresets()), useGetSoundPreset (query to fetch a single preset by name via actor.getSoundPreset(presetName)), useSaveSoundPreset (mutation to save a new preset via actor.saveSoundPreset(name, ocarinaImage)), and useDeleteSoundPreset (if backend supports it; otherwise handle client-side deletion logic). Ensure mutations invalidate the 'soundPresets' query key after save/delete."
+        },
+        {
+          "path": "frontend/src/components/SoundSettingsPanel.tsx",
+          "operation": "modify",
+          "description": "Extend the SoundSettingsPanel component to include a 'Sound Presets' section. Add a text input and 'Save Current as Preset' button that calls useSaveSoundPreset with the current sound settings and optional ocarina image filename (if one is currently set in the custom layout or state). Display a list of saved presets fetched via useGetAllSoundPresets, showing each preset name. Each preset list item should have a 'Load' button that applies the preset's tone, reverb, and pitch offset to the UI sliders and triggers a backend mutation to update sound settings. If the preset includes an ocarinaImage reference, update the app state to display that image in OcarinaVisual and Design Editor. Add a 'Delete' button per preset that calls the delete mutation. Ensure the UI updates reactively when presets are saved or loaded."
+        },
+        {
+          "path": "frontend/src/components/OcarinaDesignEditor.tsx",
+          "operation": "modify",
+          "description": "Update OcarinaDesignEditor to support loading an ocarina image when a sound preset is applied. If a loaded sound preset includes an ocarinaImage filename reference, display that image as the custom ocarina background in the editor canvas. Ensure the editor respects the preset image and does not overwrite it unless the user explicitly uploads a new image."
+        },
+        {
+          "path": "frontend/src/components/OcarinaVisual.tsx",
+          "operation": "modify",
+          "description": "Update OcarinaVisual to accept an optional custom image reference (filename or URL). If a sound preset is loaded with an ocarinaImage reference, render the ocarina visual using that image as the background instead of the default ocarina image. Use the workspace file path frontend/public/assets/generated/ocarina-default.dim_400x300.png as the fallback default image."
+        }
+      ]
+    },
+    {
+      "id": "REQ-19",
+      "summary": "Ensure all ocarina visuals and tablature symbols consistently reflect the 4-hole 2×2 parallel layout",
+      "acceptanceCriteria": [
+        "OcarinaVisual renders exactly 4 holes in a 2×2 grid (top-left, top-right, bottom-left, bottom-right)",
+        "TablatureSymbol renders exactly 4 holes in the same 2×2 arrangement",
+        "No additional holes (thumb holes, sub-holes) are shown anywhere in the app",
+        "The default layout (when no custom layout is loaded) is the 2×2 parallel configuration"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/OcarinaVisual.tsx",
+          "operation": "modify",
+          "description": "Review and confirm that OcarinaVisual renders exactly 4 holes in a 2×2 grid layout by default. The holes should be positioned as top-left, top-right, bottom-left, bottom-right in a square grid arrangement. Remove any code that renders additional holes (thumb holes, sub-holes, or extra finger holes). Ensure the default hole layout (when no custom layout is provided) is a 2×2 parallel configuration. Update hole positioning logic or constants to enforce this arrangement."
+        },
+        {
+          "path": "frontend/src/components/TablatureSymbol.tsx",
+          "operation": "modify",
+          "description": "Review and confirm that TablatureSymbol renders exactly 4 holes in the same 2×2 grid arrangement as OcarinaVisual. Ensure the SVG structure matches the 2×2 parallel layout (top-left, top-right, bottom-left, bottom-right) and remove any references to additional holes. Verify the fingering pattern array matches the 4-hole structure and that each hole is rendered consistently with the OcarinaVisual layout."
+        },
+        {
+          "path": "frontend/src/components/FingeringConfig.tsx",
+          "operation": "modify",
+          "description": "Verify that FingeringConfig displays the 4-hole 2×2 layout when rendering the interactive hole toggle UI with OcarinaVisual. Ensure the fingering pattern editor only allows toggling 4 holes arranged in the 2×2 grid, and that no additional hole toggles or UI elements are present. Confirm the backend fingering patterns are interpreted as 4-element boolean arrays matching the 2×2 layout."
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,263 @@
+{
+  "schemaVersion": "1.0.0",
+  "projectStateVersion": 7,
+  "summary": "Ocarina (and piano) music composition and tablature app. Users can set fingering defaults, save configurations, create/name songs, write sheet music with tablature that builds downward like classic notation, insert timing/bars/annotations, and share music. Supports multiple ocarina octaves with consistent fingering config. Includes custom ocarina design editor with image upload and hole overlay editing. Piano uses one octave (C5–C6) with keyboard keys a–k.",
+  "architectural_notes": [
+    "Fingering config is octave-agnostic: C4 layout is canonical and mirrored to all other octaves.",
+    "Backend must persist per-user: fingering defaults, custom ocarina hole layout (size + position), saved songs.",
+    "Image recognition pipeline needed to parse uploaded sheet music images into note/timing data for playback.",
+    "Target instrument is a 4-hole ocarina with holes arranged in a 2x2 parallel grid layout."
+  ],
+  "known_issues": [],
+  "isFixRequest": false,
+  "existing_features": [
+    {
+      "id": "feature-build-a-fingering-configuration-screen-where-users-can-set-which-holes-are-open-or-closed-for-each-note-c-d-e-f-g-a-b-the-same-configuration-is-applied-across-all-octaves-selecting-a-different-octave-c3-c4-c4-c5-c5-c6-etc-transposes-the-same-fingering-pattern-save-configuration-to-the-backend-so-it-persists-for-all-users",
+      "title": "Build a Fingering Configuration screen where users can set which holes are open or closed for each note (C, D, E, F, G, A, B). The same configuration is applied across all octaves — selecting a different octave (C3–C4, C4–C5, C5–C6, etc.) transposes the same fingering pattern. Save configuration to the backend so it persists for all users.",
+      "reqIds": [
+        "REQ-2"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-an-ocarina-visual-component-using-svg-or-canvas-display-4-holes-at-the-corners-of-a-square-centered-on-the-ocarina-body-hole-1-smallest-top-left-hole-2-slightly-larger-than-1-top-right-hole-3-larger-same-size-as-4-bottom-left-hole-4-same-size-as-3-bottom-right-the-mouthpiece-is-represented-only-as-a-short-horizontal-line-on-the-ocarina-edge-positioned-between-where-hole-2-and-hole-4-would-meet-the-edge-display-only-no-tube-shape-holes-that-are-open-are-rendered-differently-from-closed-holes-e-g-filled-vs-outlined",
+      "title": "Implement an Ocarina visual component using SVG or Canvas. Display 4 holes at the corners of a square centered on the ocarina body: Hole 1 (smallest) top-left, Hole 2 (slightly larger than 1) top-right, Hole 3 (larger, same size as 4) bottom-left, Hole 4 (same size as 3) bottom-right. The mouthpiece is represented only as a short horizontal line on the ocarina edge positioned between where Hole 2 and Hole 4 would meet the edge (display only, no tube shape). Holes that are open are rendered differently from closed holes (e.g., filled vs. outlined).",
+      "reqIds": [
+        "REQ-3"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-custom-ocarina-design-editor-screen-the-user-can-upload-a-model-ocarina-image-png-jpg-the-app-overlays-the-four-editable-holes-directly-on-top-of-the-uploaded-image-holes-can-be-dragged-to-new-positions-and-resized-using-handles-the-mouthpiece-tube-is-replaced-with-a-single-line-at-the-connection-point-on-save-all-tablature-note-symbols-throughout-the-app-update-to-reflect-the-new-hole-layout-and-sizes-the-custom-layout-and-image-reference-are-saved-to-the-backend-as-the-default",
+      "title": "Add a Custom Ocarina Design Editor screen. The user can upload a model ocarina image (PNG/JPG). The app overlays the four editable holes directly on top of the uploaded image. Holes can be dragged to new positions and resized using handles. The mouthpiece tube is replaced with a single line at the connection point. On save, all tablature note symbols throughout the app update to reflect the new hole layout and sizes. The custom layout and image reference are saved to the backend as the default.",
+      "reqIds": [
+        "REQ-4"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-build-a-song-editor-screen-where-users-can-enter-a-song-name-and-description-the-tablature-editor-occupies-the-full-screen-width-and-grows-downward-like-classic-staff-writing-left-to-right-then-new-line-below-users-can-insert-timing-signatures-e-g-4-4-3-4-bar-lines-notes-and-musical-annotations-text-labels-above-below-notes-each-note-cell-shows-the-ocarina-tablature-symbol-hole-diagram-for-the-configured-fingering",
+      "title": "Build a Song Editor screen where users can enter a song name and description. The tablature editor occupies the full screen width and grows downward like classic staff writing (left-to-right, then new line below). Users can insert: timing signatures (e.g., 4/4, 3/4), bar lines, notes, and musical annotations (text labels above/below notes). Each note cell shows the ocarina tablature symbol (hole diagram) for the configured fingering.",
+      "reqIds": [
+        "REQ-5"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-a-piano-mode-with-a-single-one-octave-keyboard-c5-to-c6-map-computer-keyboard-keys-a-s-d-f-g-h-j-k-to-the-eight-notes-c5-d5-e5-f5-g5-a5-b5-c6-respectively-display-the-piano-keys-on-screen-with-key-labels-pressing-a-key-plays-the-note-and-highlights-the-key-piano-notes-are-added-to-the-song-tablature-when-recording",
+      "title": "Implement a Piano mode with a single one-octave keyboard (C5 to C6). Map computer keyboard keys a, s, d, f, g, h, j, k to the eight notes C5, D5, E5, F5, G5, A5, B5, C6 respectively. Display the piano keys on screen with key labels. Pressing a key plays the note and highlights the key. Piano notes are added to the song tablature when recording.",
+      "reqIds": [
+        "REQ-6"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-multi-octave-support-for-the-ocarina-provide-an-octave-selector-in-the-main-play-compose-view-c3-c4-c4-c5-c5-c6-c6-c7-when-an-octave-is-selected-all-note-playback-and-tablature-symbols-use-that-octave-s-pitch-the-fingering-pattern-remains-the-same-across-octaves-inherited-from-c4-configuration-add-settings-for-ocarina-type-octave-tuning-so-users-can-adjust-pitch-for-lower-or-higher-ocarinas",
+      "title": "Add multi-octave support for the Ocarina. Provide an octave selector in the main play/compose view (C3–C4, C4–C5, C5–C6, C6–C7). When an octave is selected, all note playback and tablature symbols use that octave's pitch. The fingering pattern remains the same across octaves (inherited from C4 configuration). Add settings for ocarina type/octave tuning so users can adjust pitch for lower or higher ocarinas.",
+      "reqIds": [
+        "REQ-7"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-ocarina-sound-settings-provide-a-settings-panel-where-users-can-adjust-tone-character-brightness-warmth-slider-reverb-amount-and-pitch-offset-in-cents-or-semitones-to-match-different-physical-ocarina-instruments-these-settings-are-saved-to-the-backend-and-applied-to-playback",
+      "title": "Add Ocarina Sound Settings. Provide a settings panel where users can adjust: tone character (brightness/warmth slider), reverb amount, and pitch offset (in cents or semitones) to match different physical ocarina instruments. These settings are saved to the backend and applied to playback.",
+      "reqIds": [
+        "REQ-8"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-ocarina-tablature-symbols-integrated-with-professional-music-notation-each-note-in-the-tablature-staff-displays-a-standard-music-note-head-on-a-staff-line-showing-pitch-and-directly-below-it-an-ocarina-hole-diagram-showing-fingering-using-the-current-custom-layout-the-combined-display-should-be-readable-as-professional-sheet-music-with-tablature-underneath-similar-to-guitar-tab-staff-notation",
+      "title": "Add Ocarina Tablature Symbols integrated with professional music notation. Each note in the tablature staff displays: a standard music note head on a staff line (showing pitch), and directly below it an ocarina hole diagram (showing fingering using the current custom layout). The combined display should be readable as professional sheet music with tablature underneath, similar to guitar tab + staff notation.",
+      "reqIds": [
+        "REQ-9"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-sheet-music-image-upload-transposition-feature-users-can-upload-an-image-of-sheet-music-png-jpg-the-app-uses-browser-side-image-analysis-pixel-pattern-heuristics-or-a-lightweight-note-detection-approach-to-detect-notes-and-approximate-timing-from-the-image-then-transposes-the-detected-sequence-into-ocarina-tablature-and-adds-it-to-the-current-song-editor-for-review-and-playback",
+      "title": "Add Sheet Music Image Upload & Transposition feature. Users can upload an image of sheet music (PNG/JPG). The app uses browser-side image analysis (pixel pattern heuristics or a lightweight note-detection approach) to detect notes and approximate timing from the image, then transposes the detected sequence into ocarina tablature and adds it to the current song editor for review and playback.",
+      "reqIds": [
+        "REQ-10"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-apply-a-cohesive-visual-theme-to-the-entire-app-warm-aged-parchment-tones-cream-sepia-warm-amber-with-dark-ink-typography-evoking-handwritten-music-manuscripts-use-serif-style-headings-and-a-clean-music-editor-layout-navigation-should-be-minimal-and-sidebar-based-ensure-consistent-spacing-rounded-instrument-displays-and-clear-contrast-between-interactive-controls-and-notation-content",
+      "title": "Apply a cohesive visual theme to the entire app: warm aged-parchment tones (cream, sepia, warm amber) with dark ink typography, evoking handwritten music manuscripts. Use serif-style headings and a clean music-editor layout. Navigation should be minimal and sidebar-based. Ensure consistent spacing, rounded instrument displays, and clear contrast between interactive controls and notation content.",
+      "reqIds": [
+        "REQ-11"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-preset-songs-section-to-the-app-accessible-from-the-sidebar-navigation-that-lists-all-preset-songs-grouped-by-genre-folk-rock-electronic-reggaeton-users-can-select-a-preset-song-to-load-it-into-the-song-editor-where-it-is-pre-populated-with-all-notes-timing-signatures-bar-lines-and-annotations-a-load-into-editor-button-copies-the-preset-into-the-song-editor-for-playback-or-further-editing",
+      "title": "Add a 'Preset Songs' section to the app (accessible from the sidebar navigation) that lists all preset songs grouped by genre (Folk, Rock, Electronic, Reggaeton). Users can select a preset song to load it into the Song Editor, where it is pre-populated with all notes, timing signatures, bar lines, and annotations. A 'Load into Editor' button copies the preset into the song editor for playback or further editing.",
+      "reqIds": [
+        "REQ-13"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-when-a-preset-song-is-loaded-into-the-song-editor-enable-piano-input-mode-c5-c6-keyboard-so-the-user-can-immediately-play-along-or-record-additional-notes-on-top-of-the-preset-the-existing-keyboard-shortcut-mapping-a-k-to-c5-c6-must-remain-active-and-notes-played-via-the-piano-keyboard-must-be-appended-to-the-song-tablature-in-the-normal-recording-flow",
+      "title": "When a preset song is loaded into the Song Editor, enable piano input mode (C5–C6 keyboard) so the user can immediately play along or record additional notes on top of the preset. The existing keyboard shortcut mapping (a–k to C5–C6) must remain active and notes played via the piano keyboard must be appended to the song tablature in the normal recording flow.",
+      "reqIds": [
+        "REQ-14"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-preset-song-playback-must-use-the-ocarina-audio-synthesis-sine-triangle-with-reverb-as-defined-in-audioengine-ts-instead-of-the-piano-style-synthesis-when-a-user-loads-a-preset-song-and-plays-it-back-in-the-song-editor-the-notes-must-sound-like-the-ocarina-instrument-not-a-piano",
+      "title": "Preset song playback must use the ocarina audio synthesis (sine/triangle with reverb as defined in audioEngine.ts) instead of the piano-style synthesis. When a user loads a preset song and plays it back in the Song Editor, the notes must sound like the ocarina instrument, not a piano.",
+      "reqIds": [
+        "REQ-16"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-sound-presets-ui-panel-within-or-alongside-the-existing-sound-settings-panel-where-users-can-1-save-the-current-sound-settings-as-a-named-preset-with-an-optional-label-2-view-a-list-of-all-saved-presets-and-3-load-a-preset-to-instantly-apply-its-tone-reverb-pitch-offset-and-ocarina-image-to-the-current-session-if-the-preset-includes-an-ocarina-image-reference-display-the-associated-image-in-the-ocarinavisual-and-design-editor-views",
+      "title": "Add a Sound Presets UI panel (within or alongside the existing Sound Settings panel) where users can: (1) save the current sound settings as a named preset (with an optional label), (2) view a list of all saved presets, and (3) load a preset to instantly apply its tone, reverb, pitch offset, and ocarina image to the current session. If the preset includes an ocarina image reference, display the associated image in the OcarinaVisual and Design Editor views.",
+      "reqIds": [
+        "REQ-18"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-ensure-all-ocarina-visuals-tablature-symbols-and-hole-diagrams-throughout-the-app-consistently-reflect-the-4-hole-2-2-parallel-layout-2-holes-on-top-row-2-holes-on-bottom-row-arranged-as-a-square-grid-the-ocarinavisual-svg-component-and-tablaturesymbol-must-default-to-this-2-2-layout-no-thumb-holes-or-additional-holes-should-be-displayed",
+      "title": "Ensure all ocarina visuals, tablature symbols, and hole diagrams throughout the app consistently reflect the 4-hole 2×2 parallel layout (2 holes on top row, 2 holes on bottom row, arranged as a square grid). The OcarinaVisual SVG component and TablatureSymbol must default to this 2×2 layout. No thumb holes or additional holes should be displayed.",
+      "reqIds": [
+        "REQ-19"
+      ],
+      "version": 1
+    }
+  ],
+  "new_feature_requests": [
+    {
+      "id": "AR-1",
+      "summary": "Fingering defaults: set and save per-user fingering configuration; same fingering pattern applied across all octaves",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-2",
+      "summary": "Multi-octave ocarina support: select active octave (C3–C4, C4–C5, C5–C6, etc.); sheet music and tablature mirror C4 fingering config on other octaves",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-3",
+      "summary": "Piano mode: single octave C5–C6, keyboard keys a,s,d,f,g,h,j,k mapped to notes",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-4",
+      "summary": "Song metadata: user can set song name and description",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-5",
+      "summary": "Tablature editor: fits screen width, builds downward like classic writing; supports timing, bars, and music annotations",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-6",
+      "summary": "Ocarina visual design: 4 holes at corners of a square (hole 1 smallest, hole 2 slightly bigger, holes 3 & 4 larger); mouthpiece shown as a line on edge between hole 2 & 4 (display only)",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-7",
+      "summary": "Custom ocarina image upload: user uploads model image; app overlays editable holes directly on top; holes can be resized and repositioned; mouthpiece tube replaced with a line at connection point",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-8",
+      "summary": "Save customized hole sizes and positions as default to backend; all tablature note symbols update to reflect new model settings",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-9",
+      "summary": "Ocarina tablature symbols integrated with professional music notation; support uploading sheet music images for image-recognition-based note/timing detection and transposition to ocarina tablature for playback",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-10",
+      "summary": "Ocarina sound settings: editable sound parameters (e.g., tone, reverb, pitch adjustment for different ocarina types/octaves)",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-11",
+      "summary": "Create a Motoko backend actor that stores: (a) global fingering configuration per note (C, D, E, F, G, A, B) as hole open/closed patterns; (b) active octave setting (C3–C4, C4–C5, C5–C6, C6–C7, etc.); (c) saved songs with name, description, notes, timing, bars, and annotations; (d) custom ocarina hole layout (hole positions x/y, sizes, and reference image filename); (e) ocarina sound settings (tone, reverb, pitch offset). Expose query and update functions to read and write each of these.",
+      "reqIds": [
+        "REQ-1"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-12",
+      "summary": "Add preset songs with piano input across multiple genres: folk, rock, electronic, and reggaeton. Users can load and play these preset songs in the app.",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-13",
+      "summary": "Add a set of preset songs to the backend covering four genres: Folk, Rock, Electronic, and Reggaeton. Each preset song must include a name, description (mentioning the genre), and a sequence of notes (with octave, timing, bar lines, and annotations) that are idiomatic to the genre and playable on the ocarina using the C5–C6 piano keyboard range. Store these presets as immutable seed data accessible to all users.",
+      "reqIds": [
+        "REQ-12"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-14",
+      "summary": "Add more preset songs per genre (popular songs), include a reggae genre with a popular reggae melody",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-15",
+      "summary": "Preset song playback should use the ocarina preset sound (not piano or generic sound)",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-16",
+      "summary": "Allow users to save and load custom preset sounds along with ocarina image if uploaded",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-17",
+      "summary": "App is designed for a 4-hole ocarina in 2x2 parallel layout",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-18",
+      "summary": "Add more preset songs to the backend for each existing genre (Folk, Rock, Electronic, Reggaeton) using well-known popular melodies adapted for 4-hole ocarina in the C5–C6 range. Each genre should have at least 3–4 songs total. Add a new 'Reggae' genre with at least 2 popular reggae melodies (e.g., based on Bob Marley classics) adapted for ocarina. Each preset song must include name, description, a full sequence of notes with octave, timing, bar lines, and genre-appropriate annotations.",
+      "reqIds": [
+        "REQ-15"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-20",
+      "summary": "Add a 'Sound Presets' feature that allows users to save and load named custom sound configurations. A saved sound preset stores the current ocarina sound settings (tone character, reverb amount, pitch offset) and optionally the currently uploaded ocarina image filename. Users can name a preset, save it, and later load it to restore all those settings at once. Sound presets are persisted in the backend and accessible to all users.",
+      "reqIds": [
+        "REQ-17"
+      ],
+      "status": "pending"
+    }
+  ],
+  "gameProjectType": "none",
+  "projectName": "Ocarina Tablature Composer",
+  "clarification_mode": "instant",
+  "clarification_rounds": 0
+}

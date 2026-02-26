@@ -1,0 +1,98 @@
+{
+  "kind": "coverage_report",
+  "version": "1.0",
+  "generatedAt": "2026-02-26T02:16:11.635Z",
+  "sources": {
+    "buildRequest": true,
+    "implementationPlan": true
+  },
+  "requirements": {
+    "total": 5,
+    "implemented": 3,
+    "items": [
+      {
+        "id": "REQ-15",
+        "summary": "Add more preset songs to the backend for each existing genre (Folk, Rock, Electronic, Reggaeton) using well-known popular melodies adapted for 4-hole ocarina in the C5–C6 range. Each genre should have at least 3–4 songs total. Add a new 'Reggae' genre with at least 2 popular reggae melodies (e.g., based on Bob Marley classics) adapted for ocarina. Each preset song must include name, description, a full sequence of notes with octave, timing, bar lines, and genre-appropriate annotations.",
+        "status": "unknown",
+        "plannedFiles": [],
+        "matchedFiles": []
+      },
+      {
+        "id": "REQ-16",
+        "summary": "Preset song playback must use the ocarina audio synthesis (sine/triangle with reverb as defined in audioEngine.ts) instead of the piano-style synthesis. When a user loads a preset song and plays it back in the Song Editor, the notes must sound like the ocarina instrument, not a piano.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/components/SongEditor.tsx",
+          "frontend/src/pages/PresetSongsPage.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/components/SongEditor.tsx",
+          "frontend/src/pages/PresetSongsPage.tsx"
+        ]
+      },
+      {
+        "id": "REQ-17",
+        "summary": "Add a 'Sound Presets' feature that allows users to save and load named custom sound configurations. A saved sound preset stores the current ocarina sound settings (tone character, reverb amount, pitch offset) and optionally the currently uploaded ocarina image filename. Users can name a preset, save it, and later load it to restore all those settings at once. Sound presets are persisted in the backend and accessible to all users.",
+        "status": "unknown",
+        "plannedFiles": [],
+        "matchedFiles": []
+      },
+      {
+        "id": "REQ-18",
+        "summary": "Add a Sound Presets UI panel (within or alongside the existing Sound Settings panel) where users can: (1) save the current sound settings as a named preset (with an optional label), (2) view a list of all saved presets, and (3) load a preset to instantly apply its tone, reverb, pitch offset, and ocarina image to the current session. If the preset includes an ocarina image reference, display the associated image in the OcarinaVisual and Design Editor views.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/hooks/useQueries.ts",
+          "frontend/src/components/SoundSettingsPanel.tsx",
+          "frontend/src/components/OcarinaDesignEditor.tsx",
+          "frontend/src/components/OcarinaVisual.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/hooks/useQueries.ts",
+          "frontend/src/components/SoundSettingsPanel.tsx",
+          "frontend/src/components/OcarinaDesignEditor.tsx",
+          "frontend/src/components/OcarinaVisual.tsx"
+        ]
+      },
+      {
+        "id": "REQ-19",
+        "summary": "Ensure all ocarina visuals, tablature symbols, and hole diagrams throughout the app consistently reflect the 4-hole 2×2 parallel layout (2 holes on top row, 2 holes on bottom row, arranged as a square grid). The OcarinaVisual SVG component and TablatureSymbol must default to this 2×2 layout. No thumb holes or additional holes should be displayed.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/components/OcarinaVisual.tsx",
+          "frontend/src/components/TablatureSymbol.tsx",
+          "frontend/src/components/FingeringConfig.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/components/OcarinaVisual.tsx",
+          "frontend/src/components/TablatureSymbol.tsx"
+        ]
+      }
+    ]
+  },
+  "changedFiles": [
+    "backend/main.mo",
+    "build-request.json",
+    "feature_evidence.json",
+    "frontend-file-summaries.txt",
+    "frontend-implementation-plan.json",
+    "frontend/src/App.tsx",
+    "frontend/src/backend.d.ts",
+    "frontend/src/backend.ts",
+    "frontend/src/components/OcarinaDesignEditor.tsx",
+    "frontend/src/components/OcarinaVisual.tsx",
+    "frontend/src/components/SongEditor.tsx",
+    "frontend/src/components/SoundSettingsPanel.tsx",
+    "frontend/src/components/StaffNotation.tsx",
+    "frontend/src/components/TablatureSymbol.tsx",
+    "frontend/src/declarations/backend.did.d.ts",
+    "frontend/src/declarations/backend.did.js",
+    "frontend/src/hooks/useQueries.ts",
+    "frontend/src/pages/HomePage.tsx",
+    "frontend/src/pages/PresetSongsPage.tsx",
+    "project_state.json",
+    "scratch/component-selection.json",
+    "spec.md",
+    "spec_vs_diff_report.json"
+  ]
+}
